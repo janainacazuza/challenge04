@@ -390,7 +390,7 @@ with aba5:
     #### ***Observar a demanda global por energia: Crescimentos ou desacelerações econômicas em grandes economias, como China e Índia, podem afetar a demanda por petróleo e influenciar os preços. Investidores devem acompanhar indicadores econômicos dessas regiões.*** """)
 
 with aba6:
-    col1, col2 = st.columns([1, 2])
+    col1, col2 = st.columns([1, 1])
     with col1:
             st.markdown("### **Plano de Deploy**")
             st.markdown(
@@ -440,7 +440,7 @@ with aba6:
         st.markdown("#### ***O script também atualizará os dados externos usados no treinamento.***")
         st.markdown("#### ***Um script agendado via CRON garantirá a automação.***")
         st.markdown("#### ***Dessa forma, a previsão do preço do Brent será sempre baseada nos dados mais recentes, sem necessidade de intervenção manual.***")
-        
+
 
 with aba7:
     st.markdown(
