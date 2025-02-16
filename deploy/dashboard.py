@@ -439,7 +439,7 @@ with aba6:
         st.markdown("#### ***O script também atualizará os dados externos usados no treinamento.***")
         st.markdown("#### ***Um script agendado via CRON garantirá a automação.***")
         st.markdown("#### ***Dessa forma, a previsão do preço do Brent será sempre baseada nos dados mais recentes, sem necessidade de intervenção manual.***")
-        
+
 with aba7:
     st.markdown(
         "### Efetuamos testes com dois modelos que consideram fatores externos e avaliam séries temporais. O SARIMAX e o XGBoost.")
@@ -471,9 +471,7 @@ with aba7:
             st.code(file.read(), language="python")
 
     # grafico do modelo
-    previsoes = pd.read_csv("
-
-    data/processed/predicted.csv")
+    previsoes = pd.read_csv("data/processed/predicted.csv")
     previsoes["date"] = pd.to_datetime(previsoes["date"])
     previsoes.set_index("date", inplace=True)
 
