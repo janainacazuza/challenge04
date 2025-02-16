@@ -415,7 +415,7 @@ with aba6:
 
     st.markdown("#### **Para apreciação do código, ajustes e treinamento do modelo XGBoost, clique no botão abaixo:**")
     with st.expander("Código do Modelo XGBoost"):
-        with open("/models/modelo.py", "r") as file:
+        with open("models/modelo.py", "r") as file:
             st.code(file.read(), language="python")
 
     # grafico do modelo
