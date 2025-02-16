@@ -135,7 +135,7 @@ with aba2:
         "#### ***A produção de petróleo bruto pela OPEP é um indicador importante para entender a dinâmica do mercado de energia e as políticas de produção dos países membros.***"
     )
 
-    df_opec_production = pd.read_csv("../data/processed/opec_total_production.csv", index_col="date", parse_dates=True)
+    df_opec_production = pd.read_csv("data/processed/opec_total_production.csv", index_col="date", parse_dates=True)
     df_opec_production_copy = df_opec_production.copy()
     df_opec_production_y = df_opec_production.copy()
     df_opec_production_y = df_opec_production_y.resample("YE").mean()
@@ -164,7 +164,7 @@ with aba2:
 
 
     df_no_opec_production = pd.read_csv(
-        "../data/processed/no_opec_total_production.csv", index_col="date", parse_dates=True
+        "data/processed/no_opec_total_production.csv", index_col="date", parse_dates=True
     )
     df_no_opec_production_copy = df_no_opec_production.copy()
     df_no_opec_production_y = df_no_opec_production.copy()
@@ -207,7 +207,7 @@ with aba3:
         "### **O preço do petróleo Brent é influenciado por diversos fatores, incluindo a taxa de câmbio do dólar americano.**"
     )
 
-    df_dxy = pd.read_csv("../data/processed/dxy.csv", index_col="date", parse_dates=True)
+    df_dxy = pd.read_csv("data/processed/dxy.csv", index_col="date", parse_dates=True)
     df_dxy_copy = df_dxy.copy()
     df_dxy_y = df_dxy.copy()
     df_dxy_y["date"] = pd.to_datetime(df_dxy_y.index)
@@ -295,7 +295,7 @@ with aba4:
         join="outer",  # Mantém todos os índices, preenchendo com NaN se necessário
     )
 
-    df_merged = pd.read_csv("../data/processed/df_merged.csv")
+    df_merged = pd.read_csv("data/processed/df_merged.csv")
     df_merged["date"] = pd.to_datetime(df_merged["date"])
     df_merged.set_index("date", inplace=True)
     df_corr = df_merged.corr()
@@ -394,13 +394,13 @@ with aba6:
     st.write("Avaliamos as métricas MAE - Erro Médio Absoluto  , o MSE - Erro Quadático médio, RMSE - Raiz Quadrada do Erro Médio e o MAPE - Percentual Absoluto do erro,  para avaliar a performance dos modelos."
     )
 
-    file_path = "../models/metrics/sarimax_metrics.txt"
+    file_path = "models/metrics/sarimax_metrics.txt"
     with open(file_path, "r") as file:
         sarimax_metrics = file.read()
         st.markdown("#### ***Modelo SARIMAX:***")
         st.markdown(f"""{sarimax_metrics}""")
 
-    file_path = "../models/metrics/xgboost_metrics.txt"
+    file_path = "models/metrics/xgboost_metrics.txt"
     with open(file_path, "r") as file:
         xgboost_metrics = file.read()
         st.markdown("#### ***Modelo XGBoost:***")
@@ -415,11 +415,11 @@ with aba6:
 
     st.markdown("#### **Para apreciação do código, ajustes e treinamento do modelo XGBoost, clique no botão abaixo:**")
     with st.expander("Código do Modelo XGBoost"):
-        with open("../models/modelo.py", "r") as file:
+        with open("/models/modelo.py", "r") as file:
             st.code(file.read(), language="python")
 
     # grafico do modelo
-    previsoes = pd.read_csv("../data/processed/predicted.csv")
+    previsoes = pd.read_csv("/data/processed/predicted.csv")
     previsoes["date"] = pd.to_datetime(previsoes["date"])
     previsoes.set_index("date", inplace=True)
 
@@ -464,7 +464,7 @@ with aba6:
         )
 
 # Caminho do modelo salvo
-MODEL_PATH = "../models/modelo_brent.json"
+MODEL_PATH = "models/modelo_brent.json"
 
 
 # Função para carregar o modelo XGBoost
@@ -517,7 +517,7 @@ def create_future_features(start_date, df_merged):
 
 
 # Carregar os dados históricos
-df_merged = pd.read_csv("../data/processed/df_merged.csv")
+df_merged = pd.read_csv("data/processed/df_merged.csv")
 
 # Carregar modelo
 model = load_xgb_model()
