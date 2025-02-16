@@ -30,13 +30,14 @@ from datetime import datetime, timedelta
 st.set_page_config(page_title="Análise do Brent", layout="wide", initial_sidebar_state="auto", menu_items=None)
 st.title(" **Análise do Preço do Petróleo Brent** ")
 
-aba1, aba2, aba3, aba4, aba5, aba6, aba7, aba8 = st.tabs(
+aba1, aba2, aba3, aba4, aba5, aba6, aba7, aba8, aba9 = st.tabs(
     [
         "Pétroleo Brent",
         "Produção de Petróleo",
         "Dólar e Petróleo",
         "Correlações",
         "Insights",
+        "Plano de deploy",
         "Modelo Preditivo - IA",
         "Previsões do Brent",
         "Vídeo",
@@ -389,6 +390,57 @@ with aba5:
     #### ***Observar a demanda global por energia: Crescimentos ou desacelerações econômicas em grandes economias, como China e Índia, podem afetar a demanda por petróleo e influenciar os preços. Investidores devem acompanhar indicadores econômicos dessas regiões.*** """)
 
 with aba6:
+    with col1:
+            st.markdown("### **Plano de Deploy**")
+            st.markdown(
+                "#### ***Para o deploy do projeto, consideramos as seguintes etapas:***"
+            )
+            st.markdown(
+                "#### ***1. Estrategia de Deploy***"
+            )
+            st.markdown("#### ***1.1 Hospedagem do Dashboard"
+            )
+            st.markdown("#### ***O dashboard interativo desenvolvido com Streamlit sera hospedado no Streamlit Cloud (alternativamente, pode ser usado Render ou uma instância AWS EC2). A escolha do Streamlit Cloud facilita a implantação sem necessidade de gestão manual de infraestrutura.***"
+            )
+            st.markdown("#### **Passos para deploy no Streamlit Cloud:** ")
+            st.markdown("#### ***1. Criar um repositório no GitHub contendo todo o código do dashboard.***")
+            st.markdown("#### ***2. Criar uma conta no Streamlit Cloud (https://share.streamlit.io/).***")
+            st.markdown("#### ***3. Conectar o repositório e configurar o arquivo requirements.txt.***")
+            st.markdown("#### ***4. Definir a variável de ambiente do modelo no Streamlit Cloud (caso haja credenciais sensíveis).***")
+            st.markdown("#### ***5. Fazer o deploy e testar a aplicação.***")
+
+            st.markdown("#### ***1.2 Infraestrutura para Atualização do Modelo - a ser implementado***")
+
+            st.markdown("#### ***O modelo XGBoost precisa ser atualizado regularmente com novos dados. Para isso, será criado um job automatizado que:***")
+            st.markdown("#### ***1. Baixa os dados mais recentes do IPEA.***")
+            st.markdown("#### ***2. Atualiza os dados externos usados no modelo (Produção da OPEP/EIA, Taxa de câmbio do DXY/FRED).***")
+            st.markdown("#### ***3. Atualiza o dataset.***")
+            st.markdown("#### ***4. Re-treina o modelo XGBoost.***")
+            st.markdown("#### ***5. Avalia o desempenho do novo modelo comparado ao anterior.***")
+            st.markdown("#### ***6. Substitui o modelo salvo na AWS S3.***")
+            st.markdown("#### ***7. Reinicia o Streamlit para carregar o modelo atualizado.***")
+
+    with col2:
+        st.markdown("### **2. Automação da Atualização do Modelo**")
+        st.markdown("#### ***2.1 Fluxo de Atualização***")
+        st.markdown("#### ***A cada domingo às 02:00 da manhã, um script Python será executado automaticamente via CRON em um servidor (EC2, GitHub Actions ou um container Docker). Esse script:***")
+        st.markdown("#### ***1. Faz scraping dos novos dados do site do IPEA.***")
+        st.markdown("#### ***2. Baixa os dados externos necessários (Produção da OPEP, Taxa de câmbio DXY).***")
+        st.markdown("#### ***3. Atualiza os arquivos de dados.***")
+        st.markdown("#### ***4. Re-treina o modelo XGBoost com os dados atualizados.***")
+        st.markdown("#### ***5. Avalia o desempenho do novo modelo comparado ao anterior.***")
+        st.markdown("#### ***6. Substitui o modelo salvo na AWS S3.***")
+        st.markdown("#### ***7. Reinicia a aplicação Streamlit para carregar o modelo atualizado.***")
+
+        st.markdown("### ***Conclusão***")
+        st.markdown("#### ***O dashboard estará acessível via Streamlit Cloud.***")
+        st.markdown("#### ***O modelo será atualizado automaticamente toda semana.***")
+        st.markdown("#### ***O modelo treinado será salvo na AWS S3.***")
+        st.markdown("#### ***O script também atualizará os dados externos usados no treinamento.***")
+        st.markdown("#### ***Um script agendado via CRON garantirá a automação.***")
+        st.markdown("#### ***Dessa forma, a previsão do preço do Brent será sempre baseada nos dados mais recentes, sem necessidade de intervenção manual.***")
+        
+with aba7:
     st.markdown(
         "### Efetuamos testes com dois modelos que consideram fatores externos e avaliam séries temporais. O SARIMAX e o XGBoost.")
     st.write("Avaliamos as métricas MAE - Erro Médio Absoluto  , o MSE - Erro Quadático médio, RMSE - Raiz Quadrada do Erro Médio e o MAPE - Percentual Absoluto do erro,  para avaliar a performance dos modelos."
@@ -419,7 +471,9 @@ with aba6:
             st.code(file.read(), language="python")
 
     # grafico do modelo
-    previsoes = pd.read_csv("data/processed/predicted.csv")
+    previsoes = pd.read_csv("
+
+    data/processed/predicted.csv")
     previsoes["date"] = pd.to_datetime(previsoes["date"])
     previsoes.set_index("date", inplace=True)
 
@@ -523,7 +577,7 @@ df_merged = pd.read_csv("data/processed/df_merged.csv")
 model = load_xgb_model()
 
 # Criando uma aba de previsão no Streamlit
-with aba7:
+with aba8:
     st.write("### **Previsão do Preço do Petróleo Brent**")
 
     # Input da data de previsão
