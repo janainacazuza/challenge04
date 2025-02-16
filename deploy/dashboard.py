@@ -18,7 +18,6 @@ import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import date, datetime
-
 from scipy.signal import find_peaks
 import xgboost as xgb
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -44,8 +43,8 @@ aba1, aba2, aba3, aba4, aba5, aba6, aba7, aba8 = st.tabs(
     ])
 
 # Carregando os dados
-df_brent = pd.read_csv("../data/processed/data_brent_clean.csv")
-df_brent_y = pd.read_csv("../data/processed/data_brent_yearly.csv")
+df_brent = pd.read_csv("data/processed/data_brent_clean.csv")
+df_brent_y = pd.read_csv("data/processed/data_brent_yearly.csv")
 df_brent["date"] = pd.to_datetime(df_brent["date"])
 df_brent_copy = df_brent.copy()
 df_brent_y.set_index("date", inplace=True)
