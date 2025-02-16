@@ -419,7 +419,7 @@ with aba6:
             st.code(file.read(), language="python")
 
     # grafico do modelo
-    previsoes = pd.read_csv("/data/processed/predicted.csv")
+    previsoes = pd.read_csv("data/processed/predicted.csv")
     previsoes["date"] = pd.to_datetime(previsoes["date"])
     previsoes.set_index("date", inplace=True)
 
