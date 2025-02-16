@@ -50,6 +50,31 @@ df_brent["date"] = pd.to_datetime(df_brent["date"])
 df_brent_copy = df_brent.copy()
 df_brent_y.set_index("date", inplace=True)
 
+df_opec_production = pd.read_csv("data/processed/opec_total_production.csv", index_col="date", parse_dates=True)
+df_opec_production_copy = df_opec_production.copy()
+df_opec_production_y = df_opec_production.copy()
+df_opec_production_y = df_opec_production_y.resample("YE").mean()
+df_opec_production_y.index = pd.to_datetime(df_opec_production_y.index)
+df_opec_production_y = df_opec_production_y[df_opec_production_y.index.year >= 2000]
+df_opec_production_y = df_opec_production_y[df_opec_production_y.index.year <= 2025]
+
+df_no_opec_production = pd.read_csv("data/processed/no_opec_total_production.csv", index_col="date", parse_dates=True)
+df_no_opec_production_copy = df_no_opec_production.copy()
+df_no_opec_production_y = df_no_opec_production.copy()
+df_no_opec_production_y = df_no_opec_production_y.resample("YE").mean()
+df_no_opec_production_y.index = pd.to_datetime(df_no_opec_production_y.index)
+df_no_opec_production_y = df_no_opec_production_y[df_no_opec_production_y.index.year >= 2000]
+df_no_opec_production_y = df_no_opec_production_y[df_no_opec_production_y.index.year <= 2025]
+
+df_dxy = pd.read_csv("data/processed/dxy.csv", index_col="date", parse_dates=True)
+df_dxy_copy = df_dxy.copy()
+df_dxy_y = df_dxy.copy()
+df_dxy_y["date"] = pd.to_datetime(df_dxy_y.index)
+df_dxy_y.set_index("date", inplace=True)
+df_dxy_y = df_dxy_y.resample("YE").mean()
+
+#abas
+
 with aba1:
     st.write(
         "## ***O petróleo Brent é uma referência internacional para os preços do petróleo bruto.É extraído do Mar do Norte e é usado como referência para o preço do petróleo em todo o mundo.***"
@@ -136,13 +161,6 @@ with aba2:
         "#### ***A produção de petróleo bruto pela OPEP é um indicador importante para entender a dinâmica do mercado de energia e as políticas de produção dos países membros.***"
     )
 
-    df_opec_production = pd.read_csv("data/processed/opec_total_production.csv", index_col="date", parse_dates=True)
-    df_opec_production_copy = df_opec_production.copy()
-    df_opec_production_y = df_opec_production.copy()
-    df_opec_production_y = df_opec_production_y.resample("YE").mean()
-    df_opec_production_y.index = pd.to_datetime(df_opec_production_y.index)
-    df_opec_production_y = df_opec_production_y[df_opec_production_y.index.year >= 2000]
-    df_opec_production_y = df_opec_production_y[df_opec_production_y.index.year <= 2025]
 
     fig = px.line(
         df_opec_production_y,
@@ -163,16 +181,6 @@ with aba2:
         " \n ***A partir dos dados disponibilizados pela EIA - Energy Information Administration, foi possível extrair a série histórica da produção de petróleo bruto pela OPEP***"
     )
 
-
-    df_no_opec_production = pd.read_csv(
-        "data/processed/no_opec_total_production.csv", index_col="date", parse_dates=True
-    )
-    df_no_opec_production_copy = df_no_opec_production.copy()
-    df_no_opec_production_y = df_no_opec_production.copy()
-    df_no_opec_production_y = df_no_opec_production_y.resample("YE").mean()
-    df_no_opec_production_y.index = pd.to_datetime(df_no_opec_production_y.index)
-    df_no_opec_production_y = df_no_opec_production_y[df_no_opec_production_y.index.year >= 2000]
-    df_no_opec_production_y = df_no_opec_production_y[df_no_opec_production_y.index.year <= 2025]
 
     fig = px.line(
         df_no_opec_production_y,
@@ -207,13 +215,6 @@ with aba3:
     st.write(
         "### **O preço do petróleo Brent é influenciado por diversos fatores, incluindo a taxa de câmbio do dólar americano.**"
     )
-
-    df_dxy = pd.read_csv("data/processed/dxy.csv", index_col="date", parse_dates=True)
-    df_dxy_copy = df_dxy.copy()
-    df_dxy_y = df_dxy.copy()
-    df_dxy_y["date"] = pd.to_datetime(df_dxy_y.index)
-    df_dxy_y.set_index("date", inplace=True)
-    df_dxy_y = df_dxy_y.resample("YE").mean()
 
     fig = px.line(
         df_dxy_y,
@@ -433,13 +434,13 @@ with aba6:
         st.markdown("##### ***6. Substitui o modelo salvo na AWS S3.***")
         st.markdown("##### ***7. Reinicia a aplicação Streamlit para carregar o modelo atualizado.***")
 
-    st.markdown("### ***Conclusão***")
-    st.markdown("#### ***O dashboard estará acessível via Streamlit Cloud.***")
-    st.markdown("#### ***O modelo será atualizado automaticamente toda semana.***")
-    st.markdown("#### ***O modelo treinado será salvo na AWS S3.***")
-    st.markdown("#### ***O script também atualizará os dados externos usados no treinamento.***")
-    st.markdown("#### ***Um script agendado via CRON garantirá a automação.***")
-    st.markdown("#### ***Dessa forma, a previsão do preço do Brent será sempre baseada nos dados mais recentes, sem necessidade de intervenção manual.***")
+        st.markdown("#### ***Conclusão***")
+        st.markdown("##### ***O dashboard estará acessível via Streamlit Cloud.***")
+        st.markdown("##### ***O modelo será atualizado automaticamente toda semana.***")
+        st.markdown("##### ***O modelo treinado será salvo na AWS S3.***")
+        st.markdown("##### ***O script também atualizará os dados externos usados no treinamento.***")
+        st.markdown("##### ***Um script agendado via CRON garantirá a automação.***")
+        st.markdown("##### ***Dessa forma, a previsão do preço do Brent será sempre baseada nos dados mais recentes, sem necessidade de intervenção manual.***")
 
 
 with aba7:

@@ -3,20 +3,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def merging_data(df1, df2, df3, df4):
-    df = pd.concat(
-    [df1, df2, df3, df4],
-    axis=1,  # Junta ao longo das colunas
-    join="outer")
+def train_xgboost(df):
+    df_merged = pd.read_csv("data/df_merged.csv")
+    df_merged["date"] = pd.to_datetime(df_merged["date"])
+    df_merged.set_index("date", inplace=True)
+    df_merged["target"] = df_merged["brent_price"].shift(-1)
+    df_merged.dropna(inplace=True)
 
-    df_merged = df[['brent_price', 'production_value_opec', 'production_value_no_opec', 'dxy_value_close']].dropna()
+    X = df_merged.drop(columns=["target"])
+    y = df_merged["target"]
 
-def correlation_matrix(df):
-    corr = df.corr()
-    sns.heatmap(corr, cmap='coolwarm', fmt=".2f", annot=True)
-    plt.show()
+    model = xgb.XGBRegressor(objective="reg:squarederror", n_estimators=100)
+    model.fit(X, y)
 
-def plot_heatmap(df):
-    plt.figure(figsize=(12, 8))
-    sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt=".2f")
-    plt.show()
+    return model
+
+# Salva o modelo localmente
+def save_model_local(model):
+    model.save_model("modelo_brent.json")
+
+# Salva o modelo no S3
+def save_model_s3(model):
+    model.save_model("s3://datalake-igti-2021-06-14/modelo_brent.json")
+
+# Carrega o modelo localmente
+def load_model_local():
+    model = xgb.XGBRegressor()
+    model.load_model("modelo_brent.json")
+    return
+
+# Carrega o modelo do S3
+def load_model_s3():
+    model = xgb.XGBRegressor()
+    model.load_model("s3://datalake-igti-2021-06-14/modelo_brent.json")
+    return
+
