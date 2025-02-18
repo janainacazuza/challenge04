@@ -2,7 +2,17 @@
 
 ## Sobre o Projeto
 
-### Este projeto faz parte do Tech Challenge e tem como objetivo criar um dashboard interativo para análise do preço do petróleo Brent, além de desenvolver um modelo de Machine Learning para previsão de preços. O sistema utiliza Streamlit para visualização e um modelo XGBoost para previsões baseadas em séries temporais e fatores macroeconômicos.
+### O problema: Você foi contratado(a) para uma consultoria, e seu trabalho envolve analisar os dados de preço do petróleo brent, que pode ser encontrado no site do ipea. Essa base de dados histórica envolve duas colunas: data e preço (em dólares).
+### Um grande cliente do segmento pediu para que a consultoria desenvolvesse um dashboard interativo para gerar insights relevantes para tomada de decisão. Além disso, solicitaram que fosse desenvolvido um modelo de Machine Learning para fazer o forecasting do preço do petróleo.
+
+### Objetivos:
+#### 🔹 Criar um dashboard interativo com ferramentas à sua escolha.
+#### 🔹 Seu dashboard deve fazer parte de um storytelling que traga insights relevantes sobre a variação do preço do petróleo.
+#### 🔹 Criar um modelo de Machine Learning que faça a previsão do preço do petróleo diariamente.O modelo deve estar no storytelling e deve conter o código que você trabalhou e as performances do modelo.
+#### 🔹 Criar um plano para fazer o deploy em produção do modelo, com as ferramentas que são necessárias.
+#### 🔹 Faça um MVP do seu modelo em produção utilizando o Streamlit.
+#### 🔹 Elabore um vídeo de até 5 (cinco) minutos explicando todo o desenvolvimento do seu projeto.
+
 
 ## Funcionalidades
 
@@ -68,7 +78,7 @@ streamlit run dashboard.py
 
 ## Deploy e Automação
 
-### O projeto está hospedado no Streamlit Cloud e possui um pipeline de automação:
+### O projeto está hospedado no Streamlit Cloud e possui um pipeline de automação - Link do dashboard :[https://challenge04cazuza.streamlit.app/]
 
 #### 1. Coleta de dados do IPEA, EIA e FRED semanalmente.
 
