@@ -171,4 +171,7 @@ poetry.toml
 .ruff_cache/
 
 # LSP config files
+
 pyrightconfig.json
+
+vídeo/techchallenge04.mp4
