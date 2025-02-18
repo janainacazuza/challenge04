@@ -3,12 +3,9 @@ import requests
 import os
 import sys
 import json
-
 #BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 #sys.path.append(BASE_DIR)
 #from scripts import extract
-
-
 from bs4 import BeautifulSoup
 import yfinance as yf
 import numpy as np
@@ -595,3 +592,9 @@ with aba8:
         # Exibir tabela
         st.write("### Previsão do Preço do Brent para os próximos 7 dias")
         st.dataframe(result_df)
+with aba9:
+    st.write("### Apresentação do Projeto")
+
+    st.video("vídeo/techchallenge04.mp4")
+
+    st.write("Neste vídeo, explico o todo o projeto.")

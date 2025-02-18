@@ -1,3 +1,7 @@
+#importando bibliotecas
+import pandas as pd
+import requests
+
 
 def transform_data(df):
     df["date"] = pd.to_datetime(df["date"])
@@ -55,5 +59,3 @@ if __name__ == "__main__":
     df_dxy = pd.read_csv("data/processed/dxy.csv")
 
     merge_data(df_brent, df_opec_production, df_no_opec_production, df_dxy)
-
-    
